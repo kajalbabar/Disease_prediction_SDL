@@ -64,63 +64,67 @@ np.ravel(y_test)                                #convert the data in continues f
 # --------------------------------------Decision tree algorithm------------------------------------------------------
 
 def DecisionTree():
+    print(NameEn.get())
+    if NameEn.get() !="" :
+        l2 = []                             #empty list for prediction
+        for x in range(0, len(l.l1)):
+            l2.append(0)
 
-    l2 = []                                 #empty list for prediction
-    for x in range(0, len(l.l1)):
-        l2.append(0)
+            clf3 = tree.DecisionTreeClassifier()
+            #clf3 = tree.DecisionTreeClassifier(max_depth=100,min_samples_leaf=20,max_features=38)  # empty model of    the decision tree
 
-    clf3 = tree.DecisionTreeClassifier()
-    #clf3 = tree.DecisionTreeClassifier(max_depth=100,min_samples_leaf=20,max_features=38)  # empty model of the decision tree
+            clf3 = clf3.fit(X, y)                  #used to train the model
 
-    clf3 = clf3.fit(X, y)                  #used to train the model
+            # calculating accuracy-------------------------------------------------------------------
 
-    # calculating accuracy-------------------------------------------------------------------
-
-    #used to predict the class of the input set
-    y_pred = clf3.predict(X_test)
-    print(y_pred)
-    print("accuracy Score: ")
-    print(accuracy_score(y_test, y_pred))               #print the accuracy of the classifiaction
-    print("Num of values classified: ")
-    print(accuracy_score(y_test, y_pred, normalize=False))      #it return how many lables are classified suucessfully
+            #used to predict the class of the input set
+            y_pred = clf3.predict(X_test)
+            print(y_pred)
+            print("accuracy Score: ")
+            print(accuracy_score(y_test, y_pred))               #print the accuracy of the classifiaction
+            print("Num of values classified: ")
+            print(accuracy_score(y_test, y_pred, normalize=False))      #it return how many lables are classified   suucessfully
 
 
-    psymptoms = [Symptom1.get(), Symptom2.get(), Symptom3.get()]            #contain list of symptoms
+            psymptoms = [Symptom1.get(), Symptom2.get(), Symptom3.get()]            #contain list of symptoms
 
-    if (Symptom1.get() != 'None' or Symptom2.get() != 'None' or Symptom3.get() != 'None') and NameEn.get():
+            if (Symptom1.get() != 'None' or Symptom2.get() != 'None' or Symptom3.get() != 'None'):
 
-                #-------------------------------------
-                for k in range(0, len(l.l1)):
+                    #-------------------------------------
+                    for k in range(0, len(l.l1)):
 
-                    for z in psymptoms:
-                        if (z == l.l1[k]):
-                            l2[k] = 1
+                        for z in psymptoms:
+                            if (z == l.l1[k]):
+                                l2[k] = 1
 
-                inputtest = [l2]
-                #print(inputtest)
+                                inputtest = [l2]
+                                #print(inputtest)
 
-                #predit the value entered by the user
-                predictvalue = clf3.predict(inputtest)
-                #print("predict =" + str(predictvalue))
-                predicted = predictvalue[0]
-                #print(predicted)
+                                #predit the value entered by the user
+                                predictvalue = clf3.predict(inputtest)
+                                #print("predict =" + str(predictvalue))
+                                predicted = predictvalue[0]
+                                #print(predicted)
 
-                h = 'no'
-                for a in range(0, len(l.disease)):
-                 if predicted == a:
-                     #print("predicted ="+str(predicted))
-                     h = 'yes'
-                     break
+                                h = 'no'
+                                for a in range(0, len(l.disease)):
+                                    if predicted == a:
+                                        #print("predicted ="+str(predicted))
+                                        h = 'yes'
+                                        break
 
-                if h == 'yes':
-                    t1.delete("1.0", END)
-                    t1.insert(END, l.disease[a])
-                else:
-                    t1.delete("1.0", END)
-                    t1.insert(END, "Not Found")
+                                        if h == 'yes':
+                                            t1.delete("1.0", END)
+                                            t1.insert(END, l.disease[a])
+                                        else:
+                                            t1.delete("1.0", END)
+                                            t1.insert(END, "Not Found")
+            else:
+                                            msg = "Oops!!\nyou are missing something!!!\n please Select the Symptoms"
+                                            msg = messagebox.showwarning("Warning!", msg,)
+                                            msg.withdraw()
     else:
-        msg = "Oops!!\nyou are missing something!!!\n please Enter the Name and Select the Symptoms"
-        messagebox.showwarning("Warning!", msg,)
+        messagebox.showwarning("Warning!", "Please enter name")
 
 # ---------------------------------------Clear all-----------------------------------
 
@@ -220,5 +224,3 @@ cls.grid(row=24, column=0, padx=500, pady=70, sticky=W)
 #
 
 root.mainloop()
-
-
